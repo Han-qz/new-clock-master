@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2012 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <!--百分比布局 layout_gravity是设置该控件相对于父容器对齐方式；gravity是设置子元素在该容器内的对齐方式-->
+    <androidx.percentlayout.widget.PercentFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <!--layout_aspectRatio宽高比-->
+        <com.best.deskclock.TimerCircleFrameLayout
+            android:id="@+id/stopwatch_time_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:layout_aspectRatio="100%"
+            app:layout_heightPercent="@fraction/timer_circle_height_percent"
+            app:layout_widthPercent="@fraction/timer_circle_width_percent">
+
+            <!--<include/>作用：将公用的组件抽取出来单独一个xml文件，然后使用include标签导入公共布局，提高ui的制作和复用效率
+                通过findViewById 也可以找到view  因为通过include实际上是将自布局直接包含进公共布局当中-->
+            <include layout="@layout/stopwatch_time" />
+
+            <!-- Sufficient space exists to include the bounding stopwatch circle. 有足够的空间来包括秒表圆圈。-->
+            <com.best.deskclock.stopwatch.StopwatchCircleView
+                android:id="@+id/stopwatch_circle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </com.best.deskclock.TimerCircleFrameLayout>
+
+    </androidx.percentlayout.widget.PercentFrameLayout>
+
+    <!--Android 提供了一个更强大的滚动控件-RecyclerView，它可以说是一个增强版的ListView-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/laps_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/fab_height" />
+
+</LinearLayout>
